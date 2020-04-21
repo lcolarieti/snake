@@ -1,0 +1,85 @@
+#grid {
+  position: relative;
+  display: block;
+  width: 100%;
+  box-shadow: inset -1px 0px #e4e4e4, inset 1px 0px #e4e4e4, inset 0px 1px #e4e4e4, inset 0px -1px #e4e4e4;
+  z-index: 0;
+
+  .row {
+    display: flex;
+    box-shadow: inset 0px -1px #e4e4e4;
+
+    &:last-of-type {
+      box-shadow: inset 0px 0px #e4e4e4;
+    }
+
+    .column {
+      position: relative;
+      flex: 1;
+      width: calc(100% / var(--grid-width));
+      padding-top: calc(100% / var(--grid-width));
+      box-shadow: inset -1px 0px #e4e4e4;
+      z-index: 1;
+
+      &:last-of-type {
+        box-shadow: inset 0px 0px #e4e4e4;
+      }
+
+      .snake-tail {
+        position: absolute;
+        top: 10%;
+        left: 10%;
+        width: calc(80% - 2px);
+        height: calc(80% - 2px);
+        z-index: 3;
+        background-color: #8BC33F;
+        border: 1px solid #494C43;
+        border-radius: 50%;
+      }
+
+      .food,
+      .snake-head {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: auto;
+        z-index: 2;
+      }
+
+      .snake-head {
+        @include transition(30ms linear all);
+        z-index: 3;
+
+        &.right {
+          @include transform(rotate(-90deg) translateY(-30%));
+        }
+        &.left {
+          @include transform(rotate(90deg) translateY(-30%));
+        }
+        &.up {
+          @include transform(rotate(180deg) translateY(-30%));
+        }
+        &.down {
+          @include transform(rotate(0deg) translateY(-30%));
+        }
+
+        &.animation {
+
+          &.right {
+            @include transform(rotate(-90deg) translateY(0%));
+          }
+          &.left {
+            @include transform(rotate(90deg) translateY(0%));
+          }
+          &.up {
+            @include transform(rotate(180deg) translateY(0%));
+          }
+          &.down {
+            @include transform(rotate(0deg) translateY(0%));
+          }
+        }
+      }
+    }
+  }
+}

@@ -26,9 +26,6 @@ npm-debug.log*
 /.pnp
 .pnp.js
 
-# testing
-/coverage
-
 # production
 /build
 
