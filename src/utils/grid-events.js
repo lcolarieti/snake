@@ -5,7 +5,7 @@ import store from '../store/index';
 
 export const gridEvents = {
 
-  move: (grid, direction) => {
+  move: (grid, direction, steps, snake) => {
     let moved = false;
     iterateGrid((x, y) => {
       if (grid[x][y] && !moved) {
@@ -15,7 +15,7 @@ export const gridEvents = {
           case 'right':
           case 'left':
             let newY = (direction === 'right' ? y + 1 : y - 1);
-            if (newY >= process.env.REACT_APP_GRID_WIDTH || newY < 0) {
+            if ((newY >= process.env.REACT_APP_GRID_WIDTH || newY < 0) || gridEvents.tail(steps, snake, {x: x, y: newY})) {
               grid[x][y] = true;
               gridEvents.die(true);
             } else {
@@ -26,7 +26,7 @@ export const gridEvents = {
           case 'down':
           case 'up':
             let newX = (direction === 'down' ? x + 1 : x - 1);
-            if (newX >= process.env.REACT_APP_GRID_HEIGHT || newX < 0) {
+            if ((newX >= process.env.REACT_APP_GRID_HEIGHT || newX < 0) || gridEvents.tail(steps, snake, {x: newX, y: y})) {
               grid[x][y] = true;
               gridEvents.die(true);
             } else {
@@ -46,6 +46,7 @@ export const gridEvents = {
   },
 
   tail: (steps, snake, coords) => {
+    if (steps === undefined) return false;
     if (steps.length < snake || snake === 1) return false;
     const {x, y} = coords;
     let tailCoords = steps.slice((snake - 1) * -1);
@@ -54,11 +55,11 @@ export const gridEvents = {
   },
 
   insertFood: (steps, snake, foodCoords) => {
-    if (steps === undefined || snake === undefined) return gridEvents.generateCoords(foodCoords);
-    return gridEvents.generateCoords(foodCoords);
+    if (steps === undefined || snake === undefined) return gridEvents.generateCoords(steps, snake, foodCoords);
+    return gridEvents.generateCoords(steps, snake, foodCoords);
   },
 
-  generateCoords: (foodCoords) => {
+  generateCoords: (steps, snake, foodCoords) => {
     if (foodCoords === undefined) foodCoords = {
       x: (parseInt((process.env.REACT_APP_GRID_HEIGHT / 2), 10) - 1),
       y: (parseInt((process.env.REACT_APP_GRID_WIDTH / 2), 10) - 1)
@@ -69,7 +70,7 @@ export const gridEvents = {
         x: gridEvents.randomNumber(0, process.env.REACT_APP_GRID_WIDTH),
         y: gridEvents.randomNumber(0, process.env.REACT_APP_GRID_HEIGHT)
       };
-    } while (coords.x !== foodCoords.x && coords.y !== foodCoords.y);
+    } while (coords.x === foodCoords.x || gridEvents.tail(steps, snake, coords));
     return coords;
   },
 
@@ -78,7 +79,5 @@ export const gridEvents = {
     max = Math.floor(max);
     return Math.floor(Math.random() * (max - min)) + min;
   }
-
-
 
 };

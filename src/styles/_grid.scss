@@ -27,10 +27,10 @@
 
       .snake-tail {
         position: absolute;
-        top: 10%;
-        left: 10%;
-        width: calc(80% - 2px);
-        height: calc(80% - 2px);
+        top: 17%;
+        left: 17%;
+        width: calc(66% - 2px);
+        height: calc(66% - 2px);
         z-index: 3;
         background-color: #8BC33F;
         border: 1px solid #494C43;
@@ -67,16 +67,16 @@
         &.animation {
 
           &.right {
-            @include transform(rotate(-90deg) translateY(0%));
+            @include transform(rotate(-90deg) translateY(10%));
           }
           &.left {
-            @include transform(rotate(90deg) translateY(0%));
+            @include transform(rotate(90deg) translateY(10%));
           }
           &.up {
-            @include transform(rotate(180deg) translateY(0%));
+            @include transform(rotate(180deg) translateY(10%));
           }
           &.down {
-            @include transform(rotate(0deg) translateY(0%));
+            @include transform(rotate(0deg) translateY(10%));
           }
         }
       }

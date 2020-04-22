@@ -77,16 +77,22 @@ class Grid extends React.Component {
     return grid;
   }
 
-  handleKeyDown(evt) {
-    if (!this.state.nextStep || this.state.died) return false;
-    let direction = keyCodeToDirection(evt.keyCode, this.state.direction);
+  changeDirection(direction) {
+    if (this.state.died) return false;
     if (!direction) return false;
     if (!validateKeyPress(this.state.direction, direction)) return false;
-    this.setState({direction: direction});
-    if (this.props.direction !== direction) {
+    if (this.state.direction !== direction && this.state.nextStep) {
+      this.setState({
+        direction: direction,
+        nextStep: false
+      });
       this.props.updateDirection(direction);
-      this.setState({nextStep: false});
     }
+  }
+
+  handleKeyDown(evt) {
+    let direction = keyCodeToDirection(evt.keyCode, this.state.direction);
+    this.changeDirection(direction);
   }
 
   componentDidMount() {
@@ -95,17 +101,22 @@ class Grid extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     prevProps.gridReady !== true && this.props.grid && this.props.updateGridReady(true);
+    //prevProps.direction !== this.props.direction && this.changeDirection(this.props.direction);
+    if (prevProps.speed !== this.props.speed) {
+      clearInterval(this.interval);
+      this.interval = null;
+    }
 
-    if (this.props.gridReady) return;
+    if (this.props.gridReady && this.interval !== null) return;
     this.interval = setInterval(() => {
       this.setState({nextStep: false});
-      let grid = gridEvents.move(this.props.grid, this.state.direction);
+      let grid = gridEvents.move(this.props.grid, this.state.direction, this.props.steps, this.props.snake);
       this.props.updateGrid(grid);
-      this.setState({nextStep: true});
       prevProps !== this.props && this.setState({
         grid: this.props.grid,
         died: this.props.died,
-        foodCoords: this.props.foodCoords
+        foodCoords: this.props.foodCoords,
+        nextStep: true
       });
       this.state.died && clearInterval(this.interval);
     }, this.props.speed);

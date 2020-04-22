@@ -14,16 +14,29 @@
     left: 50%;
     @include transform(translate(-50%, -50%));
     text-align: center;
+
+    @media only screen and (max-width: $mobile-breakpoint) {
+      width: calc(100% - 30px);
+    }
   }
 
   h2 {
     margin: 0 0 10px 0;
+
+    @media only screen and (max-width: $mobile-breakpoint) {
+      font-size: 14px;
+    }
   }
 
   p {
     margin: 0 0 10px 0;
     font-size: 12px;
     line-height: 16px;
+
+    @media only screen and (max-width: $mobile-breakpoint) {
+      font-size: 10px;
+      line-height: 14px;
+    }
   }
 
   button {
@@ -37,6 +50,12 @@
     color: #fff;
     @include transition(200ms linear all);
     line-height: 1;
+
+    @media only screen and (max-width: $mobile-breakpoint) {
+      padding: 8px;
+      border-radius: 3px;
+      font-size: 12px;
+    }
 
     &:hover {
       background-color: rgba(255, 255, 255, 0.8);

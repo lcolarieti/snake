@@ -1,6 +1,9 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Grid from './Grid';
+import Score from './Score';
+import Level from './Level';
+import Buttons from './DirectionButtons'
 import './../app.scss';
 import {resetAction} from './../actions/actions';
 
@@ -28,7 +31,12 @@ class App extends React.Component {
   render() {
       return (
         <div className="container">
+          <header>
+            <Score />
+            <Level />
+          </header>
           {!this.props.reset && <Grid />}
+          <Buttons />
           <style>{gridSize}</style>
         </div>
       );

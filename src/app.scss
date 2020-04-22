@@ -1,4 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+$mobile-breakpoint: 768px;
 
 html,
 body,
@@ -33,12 +34,19 @@ body {
 }
 
 .container {
-  display: block;
   max-width: 670px;
-  padding: 30px 15px;
+  padding: 60px 15px;
   margin: 0 auto;
+
+  @media only screen and (max-width: $mobile-breakpoint) {
+    padding: 15px;
+  }
 }
 
 @import 'styles/mixin';
 @import 'styles/grid';
 @import 'styles/die';
+@import 'styles/header';
+@import 'styles/score';
+@import 'styles/level';
+@import 'styles/buttons';

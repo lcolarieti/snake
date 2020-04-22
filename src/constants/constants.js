@@ -8,3 +8,4 @@ export const RESET = 'RESET';
 export const UPDATE_STEPS = 'UPDATE_STEPS';
 export const EAT_FOOD = 'EAT_FOOD';
 export const UPDATE_TAIL = 'UPDATE_TAIL';
+export const UPDATE_SCORE = 'UPDATE_SCORE';

@@ -4,13 +4,15 @@ import {connect} from 'react-redux';
 import {gridEvents} from '../utils/grid-events';
 import {
   eatFoodAction,
-  updateTailAction
+  updateTailAction,
+  updateScoreAction
 } from './../actions/actions';
 
 const mapDispatchToProps = dispatch => {
   return {
     eatFood: () => dispatch(eatFoodAction()),
-    updateTail: () => dispatch(updateTailAction())
+    updateTail: () => dispatch(updateTailAction()),
+    updateScore: () => dispatch(updateScoreAction()),
   };
 };
 
@@ -31,6 +33,7 @@ class Food extends React.Component {
     if (prevProps.eat !== this.props.eat && this.props.eat) {
       this.props.eatFood();
       this.props.updateTail();
+      this.props.updateScore();
     }
   }
 

@@ -6,7 +6,8 @@ import {
   RESET,
   UPDATE_STEPS,
   EAT_FOOD,
-  UPDATE_TAIL
+  UPDATE_TAIL,
+  UPDATE_SCORE
 } from '../constants/constants';
 
 export const updateGridAction = (grid) => {
@@ -41,4 +42,8 @@ export const eatFoodAction = () => {
 
 export const updateTailAction = () => {
   return {type: UPDATE_TAIL};
+}
+
+export const updateScoreAction = () => {
+  return {type: UPDATE_SCORE};
 }
