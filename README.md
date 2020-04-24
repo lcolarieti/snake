@@ -4,6 +4,14 @@
 
 [See the demo here]().
 
+## Installation
+
+- `git clone https://github.com/lcolarieti/snake.git`
+- `cd snake`
+- `npm install`
+- `npm start`
+
+
 ## Available Scripts
 
 In the project directory, you can run:

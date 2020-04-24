@@ -7,7 +7,8 @@ import {
   UPDATE_STEPS,
   EAT_FOOD,
   UPDATE_TAIL,
-  UPDATE_SCORE
+  UPDATE_SCORE,
+  UPDATE_MOBILE
 } from '../constants/constants';
 
 export const updateGridAction = (grid) => {
@@ -46,4 +47,8 @@ export const updateTailAction = () => {
 
 export const updateScoreAction = () => {
   return {type: UPDATE_SCORE};
+}
+
+export const updateMobileAction = (mobile) => {
+  return {type: UPDATE_MOBILE, mobile: mobile};
 }

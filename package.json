@@ -2,6 +2,11 @@
   "name": "snake",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lcolarieti/snake.git"
+  },
+  "author": "Lorenzo Colarieti <lorenzo.colarieti@gmail.com",
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.5.0",

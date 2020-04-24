@@ -1,11 +1,21 @@
 import React from 'react';
 import './../app.scss';
 import {connect} from 'react-redux';
-import {updateDirectionAction} from './../actions/actions';
+import {
+  updateDirectionAction,
+  updateMobileAction
+} from './../actions/actions';
+
+const mapStateToProps = state => {
+  return {
+    mobile: state.mobile
+  };
+};
 
 const mapDispatchToProps = dispatch => {
   return {
-    updateDirection: direction => dispatch(updateDirectionAction(direction))
+    updateDirection: direction => dispatch(updateDirectionAction(direction)),
+    updateMobile: mobile => dispatch(updateMobileAction(mobile))
   };
 };
 
@@ -21,6 +31,7 @@ class Buttons extends React.Component {
   }
 
   handleButtonClick(evt) {
+    !this.props.mobile && this.props.updateMobile(true);
     this.props.updateDirection(evt.target.getAttribute('id'));
   }
 
@@ -37,4 +48,4 @@ class Buttons extends React.Component {
 
 }
 
-export default connect(null, mapDispatchToProps)(Buttons);
+export default connect(mapStateToProps, mapDispatchToProps)(Buttons);

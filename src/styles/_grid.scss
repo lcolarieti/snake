@@ -7,10 +7,30 @@
 
   .row {
     display: flex;
-    box-shadow: inset 0px -1px #e4e4e4;
+    border-bottom: 1px solid #e4e4e4;
 
     &:last-of-type {
-      box-shadow: inset 0px 0px #e4e4e4;
+      border-bottom: none;
+    }
+
+    &:nth-child(odd) {
+      .column {
+        background-color: #A6CA4A;
+
+        &:nth-child(even) {
+          background-color: #AAC649;
+        }
+      }
+    }
+
+    &:nth-child(even) {
+      .column {
+        background-color: #AAC649;
+
+        &:nth-child(even) {
+          background-color: #A6CA4A;
+        }
+      }
     }
 
     .column {
@@ -20,6 +40,7 @@
       padding-top: calc(100% / var(--grid-width));
       box-shadow: inset -1px 0px #e4e4e4;
       z-index: 1;
+      overflow: hidden;
 
       &:last-of-type {
         box-shadow: inset 0px 0px #e4e4e4;
@@ -32,7 +53,7 @@
         width: calc(66% - 2px);
         height: calc(66% - 2px);
         z-index: 3;
-        background-color: #8BC33F;
+        background-color: #279919;
         border: 1px solid #494C43;
         border-radius: 50%;
       }

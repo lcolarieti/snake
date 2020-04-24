@@ -27,7 +27,8 @@ const mapStateToProps = state => {
     died: state.died,
     steps: state.steps,
     snake: state.snake,
-    foodCoords: state.foodCoords
+    foodCoords: state.foodCoords,
+    mobile: state.mobile
   };
 };
 
@@ -51,7 +52,6 @@ class Grid extends React.Component {
       grid: this.props.grid,
       died: this.props.died,
       direction: this.props.direction,
-      nextStep: true,
       foodCoords: this.props.foodCoords
     }
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -81,12 +81,14 @@ class Grid extends React.Component {
     if (this.state.died) return false;
     if (!direction) return false;
     if (!validateKeyPress(this.state.direction, direction)) return false;
-    if (this.state.direction !== direction && this.state.nextStep) {
-      this.setState({
-        direction: direction,
-        nextStep: false
-      });
+
+    if (this.state.direction !== direction) {
+      clearInterval(this.interval);
+      this.interval = null;
+      this.setState({direction: direction});
       this.props.updateDirection(direction);
+      let grid = gridEvents.move(this.props.grid, this.state.direction, this.props.steps, this.props.snake);
+      this.props.updateGrid(grid);
     }
   }
 
@@ -101,7 +103,7 @@ class Grid extends React.Component {
 
   componentDidUpdate(prevProps, prevState) {
     prevProps.gridReady !== true && this.props.grid && this.props.updateGridReady(true);
-    //prevProps.direction !== this.props.direction && this.changeDirection(this.props.direction);
+    (this.props.mobile && prevProps.direction !== this.props.direction) && this.changeDirection(this.props.direction);
     if (prevProps.speed !== this.props.speed) {
       clearInterval(this.interval);
       this.interval = null;
@@ -109,14 +111,12 @@ class Grid extends React.Component {
 
     if (this.props.gridReady && this.interval !== null) return;
     this.interval = setInterval(() => {
-      this.setState({nextStep: false});
       let grid = gridEvents.move(this.props.grid, this.state.direction, this.props.steps, this.props.snake);
       this.props.updateGrid(grid);
       prevProps !== this.props && this.setState({
         grid: this.props.grid,
         died: this.props.died,
-        foodCoords: this.props.foodCoords,
-        nextStep: true
+        foodCoords: this.props.foodCoords
       });
       this.state.died && clearInterval(this.interval);
     }, this.props.speed);
